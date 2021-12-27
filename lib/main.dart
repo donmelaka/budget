@@ -17,9 +17,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         primarySwatch: Colors.orange,
         accentColor: Colors.yellow,
+        fontFamily: 'OpenSans',
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontFamily: 'QuickSand',
+            fontWeight: FontWeight.w300,
+            fontSize: 40,
+          ),
+        ),
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: const TextStyle(
+                fontFamily: 'QuickSand',
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
       ),
       home: const BudgetApp(),
     );
@@ -34,21 +48,7 @@ class BudgetApp extends StatefulWidget {
 }
 
 class _BudgetAppState extends State<BudgetApp> {
-
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't1',
-      title: 'car',
-      amount: 100.32,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'lawn mover',
-      amount: 400.32,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transaction> transactions = [];
 
   void addTransaction(String title, String amount) {
     setState(() {
@@ -61,48 +61,53 @@ class _BudgetAppState extends State<BudgetApp> {
   }
 
   void startCreateNewTransaction(BuildContext ctx) {
-    showModalBottomSheet(context: ctx, builder: (_) {
-      return NewTransaction(addTransaction: addTransaction);
-    },);
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return NewTransaction(addTransaction: addTransaction);
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('BudgetApp'),
-          actions: [
-            IconButton(
-              onPressed: ()
-                => startCreateNewTransaction(context)
-              ,
-              icon: Icon(Icons.add),
-            )
-          ],
+      appBar: AppBar(
+        title: const Text(
+          'BudgetApp',
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            height: 500,
-            child: Column(
-              children: [
-                Container(
-                  child: const Card(
-                    child: Text('First'),
-                    color: Colors.blue,
-                    elevation: 10,
-                  ),
-                  width: double.infinity,
+        actions: [
+          IconButton(
+            onPressed: () => startCreateNewTransaction(context),
+            icon: Icon(Icons.add),
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          height: 500,
+          child: Column(
+            children: [
+              Container(
+                child: const Card(
+                  child: Text('First'),
+                  color: Colors.blue,
+                  elevation: 10,
                 ),
-                TransactionList(transactions: transactions),
-              ],
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-            ),
+                width: double.infinity,
+              ),
+              TransactionList(transactions: transactions),
+            ],
+            crossAxisAlignment: CrossAxisAlignment.stretch,
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {startCreateNewTransaction(context);},
-          child: Icon(Icons.add),
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          startCreateNewTransaction(context);
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
