@@ -15,40 +15,61 @@ class ChartBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
+      child: Stack(
         children: [
-          FittedBox(
-            child: Text('\$${amount.toStringAsFixed(0)}'),
-          ),
-          SizedBox(
-            height: 4,
+          Container(
+            height: 130,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 1.0),
+              color: Colors.white,
+            ),
           ),
           Container(
-            height: 60,
-            width: 10,
-            child: Stack(
+            margin: EdgeInsets.all(10),
+            alignment: AlignmentDirectional.center,
+            child: Column(
               children: [
                 Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1.0),
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10)),
-                ),
-                FractionallySizedBox(
-                  heightFactor: percentage,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(10)),
+                  height: 20,
+                  child: FittedBox(
+                    child: Text('\$${amount.toStringAsFixed(0)}'),
                   ),
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Container(
+                  height: 60,
+                  width: 10,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1.0),
+                            color: Colors.limeAccent,
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      FractionallySizedBox(
+                        heightFactor: percentage,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                CircleAvatar(
+                  child: Text(lable),
+                  radius: 12,
                 ),
               ],
             ),
           ),
-          SizedBox(
-            height: 4,
-          ),
-          Text(lable),
         ],
       ),
     );

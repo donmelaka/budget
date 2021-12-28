@@ -32,7 +32,7 @@ class Chart extends StatelessWidget {
     });
   }
 
-  double get sum {
+    double get sum {
     return groupedTransactionValues.fold(0.0, (sum, element) {
       return sum + (element['amount'] as double);
     });
@@ -40,16 +40,13 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    groupedTransactionValues.forEach((element) {
-      print(element.toString());
-    });
     return Card(
       elevation: 6,
       child: Padding(
         padding: EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: groupedTransactionValues.map((e) {
+          children: groupedTransactionValues.reversed.map((e) {
             return Flexible(
               fit: FlexFit.tight,
               child: ChartBar(

@@ -28,16 +28,13 @@ class MyApp extends StatelessWidget {
             fontSize: 40,
           ),
         ),
-        textTheme: ThemeData
-            .light()
-            .textTheme
-            .copyWith(
-          headline6: const TextStyle(
-            fontFamily: 'QuickSand',
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: const TextStyle(
+                fontFamily: 'QuickSand',
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
       ),
       home: const BudgetApp(),
     );
@@ -74,8 +71,9 @@ class _BudgetAppState extends State<BudgetApp> {
   }
 
   List<Transaction> get _recentTransactions {
-    return transactions.where((element) =>
-        element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
+    return transactions
+        .where((element) =>
+            element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
         .toList(growable: false);
   }
 
