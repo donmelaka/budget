@@ -1,3 +1,4 @@
+import 'package:budget/widgets/chart.dart';
 import 'package:budget/widgets/new_transaction.dart';
 import 'package:budget/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +28,16 @@ class MyApp extends StatelessWidget {
             fontSize: 40,
           ),
         ),
-        textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: const TextStyle(
-                fontFamily: 'QuickSand',
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
+        textTheme: ThemeData
+            .light()
+            .textTheme
+            .copyWith(
+          headline6: const TextStyle(
+            fontFamily: 'QuickSand',
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
       ),
       home: const BudgetApp(),
     );
@@ -69,6 +73,12 @@ class _BudgetAppState extends State<BudgetApp> {
     );
   }
 
+  List<Transaction> get _recentTransactions {
+    return transactions.where((element) =>
+        element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
+        .toList(growable: false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,11 +99,7 @@ class _BudgetAppState extends State<BudgetApp> {
           child: Column(
             children: [
               Container(
-                child: const Card(
-                  child: Text('First'),
-                  color: Colors.blue,
-                  elevation: 10,
-                ),
+                child: Chart(transactions: _recentTransactions),
                 width: double.infinity,
               ),
               TransactionList(transactions: transactions),
