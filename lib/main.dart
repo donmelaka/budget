@@ -2,6 +2,7 @@ import 'package:budget/widgets/chart.dart';
 import 'package:budget/widgets/new_transaction.dart';
 import 'package:budget/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import 'models/transaction.dart';
 
@@ -62,7 +63,13 @@ class _BudgetAppState extends State<BudgetApp> {
   void addTransaction(String title, String amount, DateTime date) {
     setState(() {
       transactions.add(Transaction(
-          id: 'id', title: title, amount: double.parse(amount), date: date));
+          id: Uuid().toString(), title: title, amount: double.parse(amount), date: date));
+    });
+  }  
+  
+  void _deleteTransaction(String id) {
+    setState(() {
+      transactions.remove( transactions.firstWhere((element) => id == element.id));
     });
   }
 
@@ -105,7 +112,7 @@ class _BudgetAppState extends State<BudgetApp> {
                 child: Chart(transactions: _recentTransactions),
                 width: double.infinity,
               ),
-              TransactionList(transactions: transactions),
+              TransactionList(transactions: transactions, deleteTransaction: _deleteTransaction,),
             ],
             crossAxisAlignment: CrossAxisAlignment.stretch,
           ),
