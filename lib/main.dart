@@ -28,13 +28,21 @@ class MyApp extends StatelessWidget {
             fontSize: 40,
           ),
         ),
-        textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: const TextStyle(
-                fontFamily: 'QuickSand',
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+        textTheme: ThemeData
+            .light()
+            .textTheme
+            .copyWith(
+            headline6: const TextStyle(
+              fontFamily: 'QuickSand',
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
             ),
+            button: ThemeData
+                .light()
+                .textTheme
+                .button
+                ?.copyWith(color: Colors.white)
+        ),
       ),
       home: const BudgetApp(),
     );
@@ -51,13 +59,10 @@ class BudgetApp extends StatefulWidget {
 class _BudgetAppState extends State<BudgetApp> {
   final List<Transaction> transactions = [];
 
-  void addTransaction(String title, String amount) {
+  void addTransaction(String title, String amount, DateTime date) {
     setState(() {
       transactions.add(Transaction(
-          id: 'id',
-          title: title,
-          amount: double.parse(amount),
-          date: DateTime.now()));
+          id: 'id', title: title, amount: double.parse(amount), date: date));
     });
   }
 
@@ -73,7 +78,7 @@ class _BudgetAppState extends State<BudgetApp> {
   List<Transaction> get _recentTransactions {
     return transactions
         .where((element) =>
-            element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
+        element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
         .toList(growable: false);
   }
 
