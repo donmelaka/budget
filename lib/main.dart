@@ -29,21 +29,16 @@ class MyApp extends StatelessWidget {
             fontSize: 40,
           ),
         ),
-        textTheme: ThemeData
-            .light()
-            .textTheme
-            .copyWith(
+        textTheme: ThemeData.light().textTheme.copyWith(
             headline6: const TextStyle(
               fontFamily: 'QuickSand',
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
-            button: ThemeData
-                .light()
+            button: ThemeData.light()
                 .textTheme
                 .button
-                ?.copyWith(color: Colors.white)
-        ),
+                ?.copyWith(color: Colors.white)),
       ),
       home: const BudgetApp(),
     );
@@ -63,13 +58,17 @@ class _BudgetAppState extends State<BudgetApp> {
   void addTransaction(String title, String amount, DateTime date) {
     setState(() {
       transactions.add(Transaction(
-          id: Uuid().toString(), title: title, amount: double.parse(amount), date: date));
+          id: Uuid().toString(),
+          title: title,
+          amount: double.parse(amount),
+          date: date));
     });
-  }  
-  
+  }
+
   void _deleteTransaction(String id) {
     setState(() {
-      transactions.remove( transactions.firstWhere((element) => id == element.id));
+      transactions
+          .remove(transactions.firstWhere((element) => id == element.id));
     });
   }
 
@@ -85,7 +84,7 @@ class _BudgetAppState extends State<BudgetApp> {
   List<Transaction> get _recentTransactions {
     return transactions
         .where((element) =>
-        element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
+            element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
         .toList(growable: false);
   }
 
