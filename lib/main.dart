@@ -104,7 +104,7 @@ class _BudgetAppState extends State<BudgetApp> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: 500,
+          height: 800,
           child: Column(
             children: [
               Container(
